@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% load static %}
+
+{% block content %}
+    <div class='card mt-4 mx-auto' style="width:70%">
+        <div class='card-header card-title'>
+            <div class='row'>
+                <div class='col'>
+                    <h2>ADDED TO CART</h2>
+                </div>
+            </div>
+        </div>
+        <div class='card-body'>
+            <div class='row'>
+                <div class='col-12'>
+                    The product, {{ prodToBuyers.products.name }}, with the quantity, {{ prodToBuyers.quantity }}, was added to the cart.
+                </div>
+            </div>
+            <div class='row mt-2'>
+                <div class='offset-md-3 col-3'>
+                    <button class='btn btn-primary btn-block' onclick='history.back();'>Continue Shopping</button>
+                </div>
+                <div class='col-3'>
+                    <a class='btn btn-primary btn-block' href='{% url 'cart' %}'>Go to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

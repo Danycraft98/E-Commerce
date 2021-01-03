@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% load static %}
+
+{% block content %}
+    <div class='row'>
+        <div class='col-9'>
+            <div class='card mt-4'>
+                <div class='card-header card-title'>
+                    <div class='row'>
+                        <div class='col'>
+                            <h2>SHOPPING CART</h2>
+                        </div>
+                    </div>
+                </div>
+                {% if products|length < 1 %}
+                    <div class='card-footer bg-white'>
+                        Nothing in the cart.
+                    </div>
+                {% endif %}
+                {% for prod in products %}
+                    <div class='card-footer bg-white'>
+                        <div class='row'>
+                            <div class='col-2'>
+                                <img class='d-block w-100' src='{% static prod.products.get_image_path %}' alt='{{ prod.products.name }}'/>
+                            </div>
+                            <div class='col-2'>
+                                <p>{{ prod.products.name }}</p>
+                                <p>${{ prod.products.price|floatformat:2 }}</p>
+                            </div>
+                            <div class='col-5 my-auto'>
+                                <form name='change_quantity' method='POST' action='{% url 'cart' %}'>
+                                    {% csrf_token %}
+                                    <input name='prod_id' value='{{ prod.id }}' aria-label='{{ prod.id }}' hidden>
+                                    <div class='form-inline'>
+                                        <label for='quantity{{ forloop.counter }}'>Quantity</label>
+                                        <input class='form-control ml-2' id='quantity{{ forloop.counter }}' type='number' name='quantity' min='1' value='{{ prod.quantity }}' onchange='this.form.submit()'>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class='col-2 my-auto'>
+                                <p class='my-auto'>${{ prod.products.price |mul:prod.quantity|floatformat:2 }}</p>
+                            </div>
+                            <div class='col-1 my-auto'>
+                                <form action='{% url 'delete' prod.id %}'>
+                                    <button class='btn btn-default btn-lg' type='submit'>
+                                        <i class='fa fa-trash'></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class='col-3'>
+            <div class='card mt-4'>
+                <div class='card-header bg-white'>
+                    <div class='row'>
+                        <div class='col-8'><strong>{{ total_info.0 }} Items</strong></div>
+                        <div class='col-4'>${{ total_info.1|floatformat:2 }}</div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-8'><strong>Shipping</strong></div>
+                        <div class='col-4'>$?</div>
+                    </div>
+                </div>
+                <div class='card-body'>
+                    <div class='row'>
+                        <div class='col-8'><strong>Total (Tax Excl.)</strong></div>
+                        <div class='col-4'>${{ total_info.1|floatformat:2 }}</div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-8'><strong>Tax</strong></div>
+                        <div class='col-4'>$?</div>
+                    </div>
+                </div>
+                <div class='card-footer bg-white'>
+                    <div class='row'>
+                        <div class='col-12'>
+                            {% if products|length > 0 %}
+                                <a class='btn btn-primary' href='{% url 'pay' %}'>CHECKOUT</a>
+                            {% else %}
+                                <a class='btn btn-primary disabled'>EMPTY CART</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='card mt-4'>
+                <div class='card-body bg-white'>
+                    <div class='row'>
+                        <div class='col-12'><strong>Security Policy</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='card mt-4'>
+                <div class='card-body bg-white'>
+                    <div class='row'>
+                        <div class='col-12'><strong>Delivery Policy</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='card mt-4'>
+                <div class='card-body bg-white'>
+                    <div class='row'>
+                        <div class='col-12'><strong>Return Policy</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

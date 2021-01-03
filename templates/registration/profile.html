@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <form method='POST' action=''>
+        {% csrf_token %}
+        <div class='card border-0 shadow my-5'>
+            <div class='card-header d-flex'>
+                <h5 class='card-title my-auto mr-auto'>Profile Page</h5>
+                <button class='btn btn-primary my-auto ml-auto' id='basic-btn' type='button' onclick='edit_card(this)'>
+                    <i class='fa fa-pencil' onclick=''></i> Edit
+                </button>
+            </div>
+            <div class='card-body p-3'>
+                <div class='container-fluid' id='basic'>
+                     <div class='row'>
+                        <label class='col-2 font-weight-bold' for='username'>Username</label>
+                        <div class='col-4 value' id='username'>{{ user.username }}</div>
+
+                        <label class='col-2 font-weight-bold' for='first_name'>First Name</label>
+                        <div class='col-4 value' id='first_name'>{{ user.first_name }}</div>
+                    </div>
+
+                    <div class='row'>
+                        <label class='col-2 font-weight-bold' for='email'>Email</label>
+                        <div class='col-4 value' id='email'>{{ user.zip }}</div>
+
+                        <label class='col-2 font-weight-bold' for='last_name'>Last Name</label>
+                        <div class='col-4 value' id='last_name'>{{ user.last_name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method='POST' action='{% url 'profile' user.username %}'>
+        {% csrf_token %}
+        <div class='card border-0 shadow my-5'>
+            <div class='card-header d-flex'>
+                <h5 class='card-title my-auto mr-auto'>Home/Shipping Address</h5>
+                <button class='btn btn-primary my-auto ml-auto' id='address-btn' type='button' onclick='edit_card(this)'>
+                    <i class='fa fa-pencil'></i> Edit
+                </button>
+            </div>
+
+            <div class='card-body p-3'>
+                <div class='container-fluid' id='address'>
+                    <div class='row'>
+                        <label class='col-1 font-weight-bold' for='street'>Street</label>
+                        <div class='col-7 value' id='street'>{{ user.street }}</div>
+
+                        <label class='col-1 font-weight-bold' for='zip'>ZIP</label>
+                        <div class='col-3 value' id='zip'>{{ user.zip }}</div>
+                    </div>
+
+                    <div class='row'>
+                        <label class='col-1 font-weight-bold' for='city'>City</label>
+                        <div class='col-3 value' id='city'>{{ user.city }}</div>
+                        <label class='col-1 font-weight-bold' for='state'>State</label>
+                        <div class='col-3 value' id='state'>{{ user.state }}</div>
+                        <label class='col-1 font-weight-bold' for='country'>Country</label>
+                        <div class='col-3 value' id='country'>{{ user.country }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method='POST' action='{% url 'profile' user.username %}'>
+        {% csrf_token %}
+        <div class='card border-0 shadow my-5'>
+            <div class='card-header d-flex'>
+                <h5 class='card-title my-auto mr-auto'>Payment Information</h5>
+                <button class='btn btn-primary my-auto ml-auto' type='submit'>
+                    <i class='fa fa-pencil'></i> Edit
+                </button>
+            </div>
+            <div class='card-body'>
+                <label>Card</label>
+                <div class='payment-info card visible'>
+                    <fieldset>
+                        <div id='card-element' class='field StripeElement StripeElement--empty'>
+                            <div class='__PrivateStripeElement' style='margin: 0 !important; padding: 0 !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;'>
+                                <iframe allowtransparency='true' name='__privateStripeFrame2475' allowpaymentrequest='true'
+                                        src='https://js.stripe.com/v3/elements-inner-card-bcfa140ccd341b0462fa6104de2a811c.html#wait=false&amp;hidePostalCode=true&amp;style[base][iconColor]=%23666ee8&amp;style[base][color]=%2331325f&amp;style[base][fontWeight]=400&amp;style[base][fontFamily]=-apple-system%2C+BlinkMacSystemFont%2C+%22Segoe+UI%22%2C+Roboto%2C+Oxygen-Sans%2C+Ubuntu%2C+Cantarell%2C+%22Helvetica+Neue%22%2C+sans-serif&amp;style[base][fontSmoothing]=antialiased&amp;style[base][fontSize]=15px&amp;style[base][::placeholder][color]=%23aab7c4&amp;style[base][:-webkit-autofill][color]=%23666ee8&amp;rtl=false&amp;componentName=card&amp;keyMode=test&amp;apiKey=pk_test_PInFiPUnGR6pzLYZ2IE6oyPf&amp;origin=https%3A%2F%2Fstripe-payments-demo.appspot.com&amp;referrer=https%3A%2F%2Fstripe-payments-demo.appspot.com%2F&amp;controllerId=__privateStripeController2471'
+                                        title='Secure card payment input frame'
+                                        style='border: none !important; margin: 0 !important; padding: 0 !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translateZ(0px) !important; height: 18px;'></iframe>
+                                <input class='__PrivateStripeElement-input' aria-hidden='true' aria-label=' ' autocomplete='false' maxlength='1'
+                                       style='border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0 !important; left: 0 !important; padding: 0 !important; margin: 0 !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;'>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script src='{% static 'js/main.js' %}'></script>
+    <script src='{% static 'js/profile.js' %}'></script>
+{% endblock %}

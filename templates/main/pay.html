@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link type='text/css' rel='stylesheet' href='{% static 'css/store.css' %}'>
+    <style>
+        #country::before {
+            display: inline-flex;
+            content: '';
+            width: 21px;
+            height: 15px;
+            background: url({% static '/images/flags.svg' %}) no-repeat -1000px -1000px;
+            margin-right: 10px;
+        }
+
+        p.tip {
+            margin: -10px auto 10px;
+            padding: 5px 0 5px 30px;
+            font-size: 14px;
+            background: url({% static '/images/tip.svg' %}) left center no-repeat;
+        }
+
+        .element-errors {
+            display: inline-flex;
+            height: 20px;
+            margin: 15px auto 0;
+            padding-left: 20px;
+            color: #e25950;
+            opacity: 0;
+            transform: translateY(10px);
+            transition-property: opacity, transform;
+            transition-duration: 0.35s;
+            transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: url({% static '/images/error.svg' %}) center left no-repeat;
+            background-size: 15px 15px;
+        }
+
+        #confirmation .status {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 75px 0 275px;
+            max-width: 75%;
+            height: 350px;
+            margin: 100px auto;
+            background: #fff url({% static '/images/order.svg' %}) 75px center no-repeat;
+            box-shadow: 0 1px 3px 0 rgba(50, 50, 93, 0.15);
+            border-radius: 6px;
+        }
+
+        @media only screen and (max-width: 500px) {
+            #confirmation .status {
+                width: auto;
+                height: auto;
+                padding: 120px 15px 15px;
+                background: #fff url({% static '/images/order.svg' %}) center 15px no-repeat;
+                background-size: 68px 86px;
+                box-shadow: 0 1px 3px 0 rgba(50, 50, 93, 0.15);
+                border-radius: 6px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form method='POST' action=''>
+        {% csrf_token %}
+        <div class='card mt-4'>
+            <div class='card-header card-title'>
+                <h6>Shipping & Billing Information</h6>
+            </div>
+
+            <div class='card-body'>
+                <div class='container'>
+                    <div class='row my-2'>
+                        <label class='col-1 my-auto' for='street'>Street</label>
+                        <input name='address' class='form-control col-7' id='street' placeholder='123 Shpipping Street' value='{{ user.street }}'>
+                        <label class='col-1 my-auto' for='zip'>ZIP</label>
+                        <input name='zip' class='form-control col-3' id='zip' placeholder='A1B 2X3' value='{{ user.zip }}'>
+                    </div>
+
+                    <div class='row my-2'>
+                        <label class='col-1 my-auto' for='city'>City</label>
+                        <input name='city' class='form-control col-3' id='city' placeholder='Toronto' value='{{ user.city }}'>
+                        <label class='col-1 my-auto' for='state'>State</label>
+                        <input name='state' class='form-control col-3' id='state' placeholder='ON' value='{{ user.state }}'>
+                        <label class='col-1 my-auto' for='country'>Country</label>
+                        <select name='country' id='country' class='custom-select col-3'></select>
+                    </div>
+
+                    <p class='tip'>Select another country to see different payment options.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class='card mt-4'>
+            <div class='card-header card-title'>
+                <h6>Payment Information</h6>
+            </div>
+            <div class='card-body'>
+                <label>Card</label>
+                <div class='payment-info card visible'>
+                    <fieldset>
+                        <div id='card-element' class='field StripeElement StripeElement--empty'>
+                            <div class='__PrivateStripeElement' style='margin: 0 !important; padding: 0 !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;'>
+                                <iframe allowtransparency='true' name='__privateStripeFrame2475' allowpaymentrequest='true'
+                                        src='https://js.stripe.com/v3/elements-inner-card-bcfa140ccd341b0462fa6104de2a811c.html#wait=false&amp;hidePostalCode=true&amp;style[base][iconColor]=%23666ee8&amp;style[base][color]=%2331325f&amp;style[base][fontWeight]=400&amp;style[base][fontFamily]=-apple-system%2C+BlinkMacSystemFont%2C+%22Segoe+UI%22%2C+Roboto%2C+Oxygen-Sans%2C+Ubuntu%2C+Cantarell%2C+%22Helvetica+Neue%22%2C+sans-serif&amp;style[base][fontSmoothing]=antialiased&amp;style[base][fontSize]=15px&amp;style[base][::placeholder][color]=%23aab7c4&amp;style[base][:-webkit-autofill][color]=%23666ee8&amp;rtl=false&amp;componentName=card&amp;keyMode=test&amp;apiKey=pk_test_PInFiPUnGR6pzLYZ2IE6oyPf&amp;origin=https%3A%2F%2Fstripe-payments-demo.appspot.com&amp;referrer=https%3A%2F%2Fstripe-payments-demo.appspot.com%2F&amp;controllerId=__privateStripeController2471'
+                                        title='Secure card payment input frame'
+                                        style='border: none !important; margin: 0 !important; padding: 0 !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translateZ(0px) !important; height: 18px;'></iframe>
+                                <input class='__PrivateStripeElement-input' aria-hidden='true' aria-label=' ' autocomplete='false' maxlength='1'
+                                       style='border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0 !important; left: 0 !important; padding: 0 !important; margin: 0 !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;'>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <button class='btn btn-block btn-primary mt-4' type='submit'>Pay ${{ total_cost|floatformat:2 }}</button>
+    </form>
+    <div id='card-errors' class='element-errors'></div>
+    <div id='iban-errors' class='element-errors'></div>
+    <div id='becs-errors' class='element-errors'></div>
+    <div id='confirmation'>
+        <div class='status processing'>
+            <h1>Completing your order…</h1>
+            <p>We’re just waiting for the confirmation from your bank… This might take a moment but feel free to close this page.</p>
+            <p>We’ll send your receipt via email shortly.</p>
+        </div>
+        <div class='status success'>
+            <h1>Thanks for your order!</h1>
+            <p>Woot! You successfully made a payment with Stripe.</p>
+            <p class='note'>We just sent your receipt to your email address, and your items will be on their way shortly.</p>
+        </div>
+        <div class='status receiver'>
+            <h1>Thanks! One last step!</h1>
+            <p>Please make a payment using the details below to complete your order.</p>
+            <div class='info'></div>
+        </div>
+        <div class='status error'>
+            <h1>Oops, payment failed.</h1>
+            <p>It looks like your order could not be paid at this time. Please try again or select a different payment option.</p>
+            <p class='error-message'></p>
+        </div>
+    </div>
+
+    <aside id='summary'>
+        <div class='header'>
+            <h1>Order Summary</h1>
+        </div>
+        <div id='order-items'></div>
+        <div id='order-total'>
+            <div class='line-item subtotal'>
+                <p class='label'>Subtotal</p>
+                <p class='price' data-subtotal></p>
+            </div>
+            <div class='line-item shipping'>
+                <p class='label'>Shipping</p>
+                <p class='price'>Free</p>
+            </div>
+            <div class='line-item demo'>
+                <div id='demo'>
+                    <p class='label'>Demo in test mode</p>
+                    <p class='note'>You can copy and paste the following test cards to trigger different scenarios:</p>
+                    <table class='note'>
+                        <tr>
+                            <td>Default US card:</td>
+                            <td class='card-number'>4242<span></span>4242<span></span>4242<span></span>4242</td>
+                        </tr>
+                        <tr>
+                            <td><a href='https://stripe.com/guides/strong-customer-authentication' target='_blank'>Authentication</a> required:</td>
+                            <td class='card-number'>4000<span></span>0027<span></span>6000<span></span>3184</td>
+                        </tr>
+                    </table>
+                    <p class='note'>
+                        See the <a href='https://stripe.com/docs/testing#cards' target='_blank'>docs</a> for a full list of test cards.
+                        Non-card payments will redirect to test pages.
+                    </p>
+                </div>
+            </div>
+            <div class='line-item total'>
+                <p class='label'>Total</p>
+                <p class='price' data-total></p>
+            </div>
+        </div>
+    </aside>
+{% endblock %}
+
+{% block script %}
+    <script src='https://js.stripe.com/v3/'></script>
+    <script src='{% static 'js/main.js' %}'></script>
+
+    <script>
+        $(document).ready(function () {
+            get_country_list(document.getElementById('country'), '{{ user.country }}');
+        });
+
+        const buy_now_button = document.querySelector('#buy_now_btn')
+        /*buy_now_button.addEventListener('click', event => {
+            fetch('/checkout/')
+                .then((result) => {
+                    return result.json()
+                })
+                .then((data) => {
+                    const stripe = Stripe(data.stripe_public_key);
+
+                    stripe.redirectToCheckout({
+                        // Make the id field from the Checkout Session creation API response
+                        // available to this file, so you can provide it as parameter here
+                        // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+                        sessionId: data.session_id
+                    }).then(function (result) {
+                        // If `redirectToCheckout` fails due to a browser or network
+                        // error, display the localized error message to your customer
+                        // using `result.error.message`.
+                    });
+                })
+        });*/
+    </script>
+{% endblock %}

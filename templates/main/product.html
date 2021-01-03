@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% load static %}
+
+{% block content %}
+    <div class='row mt-4'>
+        <div class='col'>
+            <a class='text-dark' href='{% url 'index' %}'>Home</a> / <a class='text-dark' href='{% url 'product' product.name %}'>{{ product.name }}</a>
+        </div>
+    </div>
+    <hr/>
+
+    <div class='row mt-2'>
+        <div class='col-5'>
+            <img class='d-block w-100' src='{% static product.get_image_path %}' id='{{ product.name }}' alt='Dog Cloth'>
+        </div>
+        <div class='col-7'>
+            <h2>{{ product.name }}</h2>
+            <h4 class='text-secondary'>${{ product.price|floatformat:2 }}</h4>
+            <hr/>
+            <form method='POST' action='{% url 'add' %}'>
+                {% csrf_token %}
+                <input name='prod_id' value='{{ product.id }}' aria-label='id' hidden>
+                <div class='form-group form-inline' style='width: 100%;'>
+                    <div class="form-group">
+                        <label for='quantity'>Quantity</label>
+                        <input class='form-control ml-2' id='quantity' name='quantity' type='number' min='1' value='1'>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <button class='btn btn-primary ml-2' type='submit'>ADD TO CART</button>
+                    {% else %}
+                        <button class='btn btn-primary ml-2' type='submit' disabled>Login to Add</button>
+                    {% endif %}
+                </div>
+            </form>
+            <small>{% if product.stock > 0 %}In Stock{% else %}Out of Stock{% endif %}</small>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
