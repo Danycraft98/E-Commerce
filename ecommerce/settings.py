@@ -20,11 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@+@-xbsi0fm#chhna_2y%u5*jl=18f#4xgd^u2fpv38#fcob_e'
+SECRET_KEY = SECRET_LIVE_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = []
 
 
@@ -84,12 +83,12 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': 3306,
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': ''
     }
 }
 
@@ -137,5 +136,5 @@ STATICFILES_DIRS = [
 
 # Stripe Informations
 
-STRIPE_PUBLIC_KEY = 'pk_test_51I2xOhEUKaBiWzyCM8Dki6Jv2ec9OxJVsdo4DgJXnMgIsHUJsEGkh2w0qrHqgygAamsLJNoRNQT1XvfGs9Apda7y00ilQNqky6'
-STRIPE_PRIVATE_KEY = 'sk_test_51I2xOhEUKaBiWzyC1B4m6XcxSEsCkKUMssqDESLAuGJCng9d9KIsmes4n7imHyUeEky8DjtPs2lCTfVt3KiLeC4s00fXtDR0RV'
+STRIPE_PUBLIC_KEY = config('STRIPE_LIVE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_LIVE_SECRET_KEY')
