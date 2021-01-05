@@ -1,8 +1,6 @@
 <p align="center">
   <p align="center">
-    <a href="https://justdjango.com/?utm_source=github&utm_medium=logo" target="_blank">
-      <img src="https://github.com/Danycraft98/ecommerce/blob/main/static/images/logo2.png" alt="Cherry-Tree" height="72">
-    </a>
+    <img src="https://github.com/Danycraft98/ecommerce/blob/main/static/images/logo2.png" alt="Cherry-Tree" height="72">
   </p>
   <p align="center">
     Sample E-commerce Website.
@@ -17,7 +15,7 @@ This is a very simple e-commerce website built with Django.
 
 ## Main Page Screenshot
 
-[![alt text](https://github.com/Danycraft98/ecommerce/raw/main/static/images/screenshot.png)](https://youtu.be/z4USlooVXG0)
+![alt text](https://github.com/Danycraft98/ecommerce/raw/main/static/images/screenshot.png)
 
 ---
 
