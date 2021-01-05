@@ -17,7 +17,7 @@ This is a very simple e-commerce website built with Django.
 
 ## Main Page Screenshot
 
-[![alt text](https://justdjango.s3-us-west-2.amazonaws.com/media/gifs/djecommerce.gif "Logo")](https://youtu.be/z4USlooVXG0)
+[![alt text](https://github.com/Danycraft98/ecommerce/raw/main/static/images/screenshot.png)](https://youtu.be/z4USlooVXG0)
 
 ---
 
