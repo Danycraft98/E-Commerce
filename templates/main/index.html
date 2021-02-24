@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-    <div class='row mt-4'>
+    <div class='row'>
         <div class='col-12'>
             <div class='carousel slide' id='carousel' data-ride='carousel'>
                 <ol class='carousel-indicators'>
@@ -23,105 +23,291 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Store List -->
-            <div class='row col mt-4'>
-                <h4>Latest Arrival</h4>
-            </div>
-
-            {% for prod in products %}
-                {% ifequal forloop.counter0|mod:4 0 %}
-                    <div class='row mt-4'>
-                {% endifequal %}
-                        <div class='col-3'>
-                            <a class='text-dark' href='{% url 'product' prod.name %}'>
-                                <img class='d-block w-100' src='{% static prod.get_image_path %}' id='{{ prod.name }}' alt='Dog Cloth'>
-                                <form method='POST' action='{% url 'add' %}'>
-                                    {% csrf_token %}
-                                    <input name='prod_id' value='{{ prod.id }}' aria-label='id' hidden>
-                                    <input class='form-control ml-2' id='quantity' name='quantity' type='number' min='1' value='1' aria-label='quantity' hidden>
-                                    <label class='card-link' for='{{ prod.name }}'>{{ prod.name }}<br/>${{ prod.price|floatformat:2 }} |
-                                        <button class='px-0 btn btn-default card-link' onclick='this.form.submit()'><i class='fa fa-shopping-cart'></i> Add to Cart</button>
-                                    </label>
-                                </form>
-                            </a>
-                        </div>
-                {% ifequal forloop.counter0|mod:4 3 %}
-                    </div>
-                {% endifequal %}
-                {% ifnotequal forloop.counter0|mod:4 3 %}
-                {% ifequal products|length forloop.counter %}
-                        </div>
-                    </div>
-                {% endifequal %}
-                {% endifnotequal %}
-            {% endfor %}
         </div>
+    </div>
 
-        <!-- Side Bar >
-        <div class='col-3'>
-            <div class='card border-0 shadow mb-5'>
-                <div class='card-header card-title'><i class='fa fa-hashtag'></i> Tags</div>
-                <div class='card-body'>
-                    {% for tag in tags %}
-                        <p><a href='{% url 'products' tag %}'>{{ tag }}</a></p>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class='card border-0 shadow my-5'>
-
-            </div>
-        </div-->
-
-        <div class='col-12'>
-            <div class='card mt-4'>
-                <div class='card-header card-title w-100'>Other Prdoducts</div>
-                <div class='card-body'>
-                    <div class='carousel slide' id='other-product' data-ride='carousel'>
-                        <div class='carousel-inner'>
-                            {% for prod in products %}
-                                {% ifequal forloop.counter0|mod:4 0 %}
-                                    <div class='carousel-item active'>
-                                        <div class='row mx-0 mt-2'>
-                                {% endifequal %}
-                                            <div class='col-3'>
-                                                <img class='d-block w-100' src='{% static prod.get_image_path %}' id='{{ prod.name }}' alt='Dog Cloth'>
-                                                <form method='POST' action='{% url 'add' %}'>
-                                                    {% csrf_token %}
-                                                    <input name='prod_id' value='{{ prod.id }}' aria-label='id' hidden>
-                                                    <input class='form-control ml-2' id='quantity' name='quantity' type='number' min='1' value='1' aria-label='quantity' hidden>
-                                                    <label class='card-link' for='{{ prod.name }}'>{{ prod.name }}<br/>${{ prod.price|floatformat:2 }} |
-                                                        <button class='px-0 btn btn-default card-link' onclick='this.form.submit()'><i class='fa fa-shopping-cart'></i> Add to Cart</button>
-                                                    </label>
-                                                </form>
-                                            </div>
-                                {% ifequal forloop.counter0|mod:4 3 %}
+    <div class="row">
+        <div class="categories">
+            <div class="container">
+                <div class="row">
+                    <div class="categories__slider owl-carousel owl-loaded owl-drag">
+                        <div class="owl-stage-outer">
+                            <div class="owl-stage" style="transform: translate3d(-1162px, 0px, 0px); transition: all 1.2s ease 0s; width: 3719px;">
+                                <div class="owl-item cloned" style="width: 210px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-034-chocolate-roll"></span>
+                                            <h5>Butter</h5>
                                         </div>
                                     </div>
-                                {% endifequal %}
-                                {% ifnotequal forloop.counter0|mod:4 3 %}
-                                {% ifequal products|length forloop.counter %}
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-005-pancake"></span>
+                                            <h5>Red Velvet</h5>
                                         </div>
                                     </div>
-                                {% endifequal %}
-                                {% endifnotequal %}
-                            {% endfor %}
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-030-cupcake-2"></span>
+                                            <h5>Biscuit</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-006-macarons"></span>
+                                            <h5>Donut</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned active" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-006-macarons"></span>
+                                            <h5>Cupcake</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item active" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-029-cupcake-3"></span>
+                                            <h5>Cupcake</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item active" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-034-chocolate-roll"></span>
+                                            <h5>Butter</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item active" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-005-pancake"></span>
+                                            <h5>Red Velvet</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item active" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-030-cupcake-2"></span>
+                                            <h5>Biscuit</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item active" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-006-macarons"></span>
+                                            <h5>Donut</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-006-macarons"></span>
+                                            <h5>Cupcake</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-029-cupcake-3"></span>
+                                            <h5>Cupcake</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-034-chocolate-roll"></span>
+                                            <h5>Butter</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-005-pancake"></span>
+                                            <h5>Red Velvet</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-030-cupcake-2"></span>
+                                            <h5>Biscuit</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 210.4px; margin-right: 22px;">
+                                    <div class="categories__item">
+                                        <div class="categories__item__icon">
+                                            <span class="flaticon-006-macarons"></span>
+                                            <h5>Donut</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="owl-nav">
+                            <button type="button" role="presentation" class="owl-prev"><span class="arrow_carrot-left"><span></span></span></button>
+                            <button type="button" role="presentation" class="owl-next"><span class="arrow_carrot-right"><span></span></span></button>
+                        </div>
+                        <div class="owl-dots disabled"></div>
                     </div>
-                    <a class='carousel-control-prev arrow-pad' href='#other-product' role='button' data-slide='prev'>
-                        <span class='carousel-control-prev-icon arrow-prev-btn' aria-hidden='true'></span>
-                        <span class='sr-only'>Previous</span>
-                    </a>
-                    <a class='carousel-control-next arrow-pad' href='#other-product' role='button' data-slide='next'>
-                        <span class='carousel-control-next-icon arrow-next-btn' aria-hidden='true'></span>
-                        <span class='sr-only'>Next</span>
-                    </a>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
 
-{% block script %}
+    <div>
+        <section class="product spad" style="" switch-adjust-width-normal="32">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">Dozen Cupcakes</a></h6>
+                                <div class="product__item__price">$32.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">Cookies and Cream</a></h6>
+                                <div class="product__item__price">$30.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">Gluten Free Mini Dozen</a></h6>
+                                <div class="product__item__price">$31.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">Cookie Dough</a></h6>
+                                <div class="product__item__price">$25.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">Vanilla Salted Caramel</a></h6>
+                                <div class="product__item__price">$05.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">German Chocolate</a></h6>
+                                <div class="product__item__price">$14.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">Dulce De Leche</a></h6>
+                                <div class="product__item__price">$32.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{% static 'product_images/product-1.jpg' %}" style="background-image: url({% static 'product_images/product-1.jpg' %});">
+                                <div class="product__label">
+                                    <span>Cupcake</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">Mississippi Mud</a></h6>
+                                <div class="product__item__price">$08.00</div>
+                                <div class="cart_add">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}

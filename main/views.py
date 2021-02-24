@@ -103,7 +103,7 @@ def pay(request):
         'session_id': session.id,
         'stripe_public_key': settings.STRIPE_PUBLIC_KEY
     }
-    return render(request, 'main/pay.html', {'total_cost': total_cost})
+    return render(request, 'main/pay.html', {'total_cost': total_cost, 'user': request.user})
 
 
 def delete(request, prod_id):

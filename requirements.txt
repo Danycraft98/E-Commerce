@@ -1,16 +1,30 @@
-Django>=3.1.5
-python-decouple>=3.3
-asgiref>=3.3.1
-certifi>=2020.12.5
-chardet>=4.0.0
-django-cors-headers>=3.6.0
-django-mathfilters>=1.0.0
-idna>=3.1
-mysqlclient>=2.0.3
-pip>=20.3.3
-pytz>=2020.5
-requests>=2.25.1
-setuptools>=51.1.1
-sqlparse>=0.4.1
-stripe>=2.55.1
-urllib3>=1.26.2
+# Main Packages ---------------------
+pip
+setuptools
+wheel
+psycopg2
+
+# Heroku Packages -------------------
+gunicorn
+django-heroku
+whitenoise
+scout-apm
+
+# Django Packages -------------------
+Django~=3.1.7
+dj-database-url
+django-cors-headers
+django-createuser
+django-extensions
+django-filter
+djangorestframework
+django-rest-auth
+django-allauth
+django-mathfilters
+
+# Other Packages --------------------
+python-dotenv
+pytz
+sqlparse
+stripe
+urllib3

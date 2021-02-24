@@ -4,22 +4,6 @@
 {% block style %}
     <link type='text/css' rel='stylesheet' href='{% static 'css/store.css' %}'>
     <style>
-        #country::before {
-            display: inline-flex;
-            content: '';
-            width: 21px;
-            height: 15px;
-            background: url({% static '/images/flags.svg' %}) no-repeat -1000px -1000px;
-            margin-right: 10px;
-        }
-
-        p.tip {
-            margin: -10px auto 10px;
-            padding: 5px 0 5px 30px;
-            font-size: 14px;
-            background: url({% static '/images/tip.svg' %}) left center no-repeat;
-        }
-
         .element-errors {
             display: inline-flex;
             height: 20px;
@@ -63,61 +47,155 @@
 {% endblock %}
 
 {% block content %}
-    <form method='POST' action=''>
-        {% csrf_token %}
-        <div class='card mt-4'>
-            <div class='card-header card-title'>
-                <h6>Shipping & Billing Information</h6>
-            </div>
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <form action="">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
+                                here</a> to enter your code</h6>
+                            <h6 class="checkout__title">Billing Details</h6>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Fist Name<span>*</span></p>
+                                        <input type="text" value='{{ user.get_short_name }}' aria-label='First Name'>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Last Name<span>*</span></p>
+                                        <input type="text" value='{{ user.get_last_name }}' aria-label='Last Name'>
+                                    </div>
+                                </div>
+                            </div>
 
-            <div class='card-body'>
-                <div class='container'>
-                    <div class='row my-2'>
-                        <label class='col-1 my-auto' for='street'>Street</label>
-                        <input name='address' class='form-control col-7' id='street' placeholder='123 Shpipping Street' value='{{ user.street }}'>
-                        <label class='col-1 my-auto' for='zip'>ZIP</label>
-                        <input name='zip' class='form-control col-3' id='zip' placeholder='A1B 2X3' value='{{ user.zip }}'>
-                    </div>
+                            <div class="checkout__input">
+                                <p>Street Address<span>*</span></p>
+                                <input type="text" class="checkout__input__add" value='{{ user.get_address.0 }}'>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Town/City<span>*</span></p>
+                                <input type="text" value='{{ user.get_address.1 }}'>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Province/State<span>*</span></p>
+                                <input type="text" value='{{ user.get_address.2 }}'>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Country<span>*</span></p>
+                                <select name='country' id='country'></select>
+                                <!--input type="text" value='{{ user.get_address.4 }}'-->
+                            </div>
+                            <div class="checkout__input">
+                                <p>Postcode / ZIP<span>*</span></p>
+                                <input type="text" value='{{ user.get_address.3 }}'>
+                            </div>
 
-                    <div class='row my-2'>
-                        <label class='col-1 my-auto' for='city'>City</label>
-                        <input name='city' class='form-control col-3' id='city' placeholder='Toronto' value='{{ user.city }}'>
-                        <label class='col-1 my-auto' for='state'>State</label>
-                        <input name='state' class='form-control col-3' id='state' placeholder='ON' value='{{ user.state }}'>
-                        <label class='col-1 my-auto' for='country'>Country</label>
-                        <select name='country' id='country' class='custom-select col-3'></select>
-                    </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div>
 
-                    <p class='tip'>Select another country to see different payment options.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="checkout__input">
+                                <p>Payment Information<span>*</span></p>
+                                <div class='payment-info card visible'>
+                                    <fieldset>
+                                        <div id='card-element' class='field StripeElement StripeElement--empty'>
+                                            <div class='__PrivateStripeElement' style='margin: 0 !important; padding: 0 !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;'>
+                                                <iframe allowtransparency='true' name='__privateStripeFrame2475' allowpaymentrequest='true'
+                                                        src='https://js.stripe.com/v3/elements-inner-card-bcfa140ccd341b0462fa6104de2a811c.html#wait=false&amp;hidePostalCode=true&amp;style[base][iconColor]=%23666ee8&amp;style[base][color]=%2331325f&amp;style[base][fontWeight]=400&amp;style[base][fontFamily]=-apple-system%2C+BlinkMacSystemFont%2C+%22Segoe+UI%22%2C+Roboto%2C+Oxygen-Sans%2C+Ubuntu%2C+Cantarell%2C+%22Helvetica+Neue%22%2C+sans-serif&amp;style[base][fontSmoothing]=antialiased&amp;style[base][fontSize]=15px&amp;style[base][::placeholder][color]=%23aab7c4&amp;style[base][:-webkit-autofill][color]=%23666ee8&amp;rtl=false&amp;componentName=card&amp;keyMode=test&amp;apiKey=pk_test_PInFiPUnGR6pzLYZ2IE6oyPf&amp;origin=https%3A%2F%2Fstripe-payments-demo.appspot.com&amp;referrer=https%3A%2F%2Fstripe-payments-demo.appspot.com%2F&amp;controllerId=__privateStripeController2471'
+                                                        title='Secure card payment input frame'
+                                                        style='border: none !important; margin: 0 !important; padding: 0 !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translateZ(0px) !important; height: 18px;'></iframe>
+                                                <input class='__PrivateStripeElement-input' aria-hidden='true' aria-label=' ' autocomplete='false' maxlength='1'
+                                                       style='border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0 !important; left: 0 !important; padding: 0 !important; margin: 0 !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;'>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
 
-        <div class='card mt-4'>
-            <div class='card-header card-title'>
-                <h6>Payment Information</h6>
-            </div>
-            <div class='card-body'>
-                <label>Card</label>
-                <div class='payment-info card visible'>
-                    <fieldset>
-                        <div id='card-element' class='field StripeElement StripeElement--empty'>
-                            <div class='__PrivateStripeElement' style='margin: 0 !important; padding: 0 !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;'>
-                                <iframe allowtransparency='true' name='__privateStripeFrame2475' allowpaymentrequest='true'
-                                        src='https://js.stripe.com/v3/elements-inner-card-bcfa140ccd341b0462fa6104de2a811c.html#wait=false&amp;hidePostalCode=true&amp;style[base][iconColor]=%23666ee8&amp;style[base][color]=%2331325f&amp;style[base][fontWeight]=400&amp;style[base][fontFamily]=-apple-system%2C+BlinkMacSystemFont%2C+%22Segoe+UI%22%2C+Roboto%2C+Oxygen-Sans%2C+Ubuntu%2C+Cantarell%2C+%22Helvetica+Neue%22%2C+sans-serif&amp;style[base][fontSmoothing]=antialiased&amp;style[base][fontSize]=15px&amp;style[base][::placeholder][color]=%23aab7c4&amp;style[base][:-webkit-autofill][color]=%23666ee8&amp;rtl=false&amp;componentName=card&amp;keyMode=test&amp;apiKey=pk_test_PInFiPUnGR6pzLYZ2IE6oyPf&amp;origin=https%3A%2F%2Fstripe-payments-demo.appspot.com&amp;referrer=https%3A%2F%2Fstripe-payments-demo.appspot.com%2F&amp;controllerId=__privateStripeController2471'
-                                        title='Secure card payment input frame'
-                                        style='border: none !important; margin: 0 !important; padding: 0 !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translateZ(0px) !important; height: 18px;'></iframe>
-                                <input class='__PrivateStripeElement-input' aria-hidden='true' aria-label=' ' autocomplete='false' maxlength='1'
-                                       style='border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0 !important; left: 0 !important; padding: 0 !important; margin: 0 !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;'>
+                            <div class="checkout__input__checkbox">
+                                <label for="diff-acc">
+                                    Note about your order, e.g, special note for delivery
+                                    <input type="checkbox" id="diff-acc">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Order notes</p>
+                                <input type="text" placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
-                    </fieldset>
-                </div>
+
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h6 class="order__title">Your order</h6>
+                                <div class="checkout__order__products">Product <span>Total</span></div>
+                                <ul class="checkout__total__products">
+                                    <li><samp>01.</samp> Vanilla salted caramel <span>$ 300.0</span></li>
+                                    <li><samp>02.</samp> German chocolate <span>$ 170.0</span></li>
+                                    <li><samp>03.</samp> Sweet autumn <span>$ 170.0</span></li>
+                                    <li><samp>04.</samp> Cluten free mini dozen <span>$ 110.0</span></li>
+                                </ul>
+                                <ul class="checkout__total__all">
+                                    <li>Subtotal <span>$750.99</span></li>
+                                    <li>Total <span>$750.99</span></li>
+                                </ul>
+
+                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
+                                    ut labore et dolore magna aliqua.</p>
+                                <div class="checkout__input__checkbox">
+                                    <label for="payment">
+                                        Check Payment
+                                        <input type="checkbox" id="payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="paypal">
+                                        Paypal
+                                        <input type="checkbox" id="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </section>
+
+
+
+
+
+
+
+    <form method='POST' action=''>
 
         <button class='btn btn-block btn-primary mt-4' type='submit'>Pay ${{ total_cost|floatformat:2 }}</button>
     </form>
+
+
+
+
+
     <div id='card-errors' class='element-errors'></div>
     <div id='iban-errors' class='element-errors'></div>
     <div id='becs-errors' class='element-errors'></div>

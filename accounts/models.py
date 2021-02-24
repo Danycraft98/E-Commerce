@@ -76,6 +76,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_last_name(self):
         return self.last_name
 
+    def get_address(self):
+        return [self.street, self.city, self.state, self.zip, self.country]
+
     def __str__(self):
         return self.username
 

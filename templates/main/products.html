@@ -4,57 +4,132 @@
 {% load static %}
 
 {% block content %}
-    <div class='row mt-4'>
-        <div class='col'>
-        {% if item|is_string %}
-            <a class='text-dark disabled'>Search Result</a>
-        {% else %}
-            <a class='text-dark' href='{% url 'index' %}'>Home</a> / <a class='text-dark' href='{% url 'products' item %}'>
-                {% if item.name %}{{ item.name }}{% else %}{{ item.content }}{% endif %}
-            </a>
-        {% endif %}
-        </div>
-    </div>
-    <hr/>
-
-    <h2>{{ tag }}</h2>
-    <div class='row'>
-        <div class='col-2'>
-            <div class='card'>
-                <div class='card-header card-title'>
-                    <i class='fa fa-bars mr'></i> Home
+    <div class="breadcrumb-option" style="" switch-adjust-width-normal="11">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="breadcrumb__text">
+                        <h2>Shop ({{ tag }})</h2>
+                    </div>
                 </div>
-                <div class='card-body'>
-                    {% for group in groups %}
-                        <a class='card-link' href='{% url 'products' group.name %}'>{{ group.name }}</a>
-                    {% endfor %}
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'index' %}">Home</a>
+                        <span>{{ item }}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class='col-10'>
-            {% for prod in products %}
-                {% ifequal forloop.counter0 0 %}
-                    <div class='row mx-5'>
-                {% endifequal %}
-                        <div class='col-4'>
-                            <a href='{% url 'product' prod.name %}'>
-                                <img class='d-block w-100' src='{% static prod.get_image_path %}' id='{{ prod.name }}' alt='Dog Cloth'>
-                                <form method='POST' action='{% url 'add' %}'>
-                                    {% csrf_token %}
-                                    <input name='prod_id' value='{{ prod.id }}' aria-label='id' hidden>
-                                    <input class='form-control ml-2' id='quantity' name='quantity' type='number' min='1' value='1' aria-label='quantity' hidden>
-                                    <label class='card-link' for='{{ prod.name }}'>{{ prod.name }}<br/>${{ prod.price|floatformat:2 }} |
-                                        <button class='px-0 btn btn-default card-link' onclick='this.form.submit()'><i class='fa fa-shopping-cart'></i> Add to Cart</button>
-                                    </label>
-                                </form>
-                            </a>
-                        </div>
-                {% ifequal forloop.counter0 2 %}
-                    </div>
-                {% endifequal %}
-            {% endfor %}
-        </div>
     </div>
+
+    <!--div class='row'>
+        <div class='col'>
+            {% if item|is_string %}
+                <a class='text-dark disabled'>Search Result</a>
+            {% else %}
+                <a class='text-dark' href='{% url 'index' %}'>Home</a> / <a class='text-dark' href='{% url 'products' item %}'>
+                {% if item.name %}{{ item.name }}{% else %}{{ item.content }}{% endif %}
+            </a>
+            {% endif %}
+        </div>
+    </div-->
+
+    <section class="shop spad" style="" switch-adjust-width-normal="12">
+        <div class="container">
+            <div class="shop__option">
+                <div class="row">
+                    <div class="col-lg-7 col-md-7">
+                        <div class="shop__option__search">
+                            <form action="#">
+                                <select style="display: none;">
+                                    <option value="">Categories</option>
+                                    <option value="">Red Velvet</option>
+                                    <option value="">Cup Cake</option>
+                                    <option value="">Biscuit</option>
+                                </select>
+                                <div class="nice-select" tabindex="0"><span class="current">Categories</span>
+                                    <div class="list">
+                                        <div data-value="" class="option selected">Categories</div>
+                                        <div data-value="" class="option">Red Velvet</div>
+                                        <div data-value="" class="option">Cup Cake</div>
+                                        <div data-value="" class="option">Biscuit</div>
+                                    </div>
+                                </div>
+                                <input type="text" placeholder="Search">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div class="shop__option__right">
+                            <select class="nice-select list" style="display: none;">
+                                <option value="">Default sorting</option>
+                                <option value="">A to Z</option>
+                                <option value="">1 - 8</option>
+                                <option value="">Name</option>
+                            </select>
+                            <!--div class="nice-select" tabindex="0"><span class="current">Default sorting</span>
+                                <ul class="list">
+                                    <li data-value="" class="option selected focus">Default sorting</li>
+                                    <li data-value="" class="option">A to Z</li>
+                                    <li data-value="" class="option">1 - 8</li>
+                                    <li data-value="" class="option">Name</li>
+                                </ul>
+                            </div-->
+                            <a href="#"><i class="fa fa-list"></i></a>
+                            <a href="#"><i class="fa fa-reorder"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% for prod in products %}
+                {% if forloop.counter0|divisibleby:5 %}
+                    <div class='row'>
+                {% endif %}
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="{% static prod.get_image_path %}" style="background-image: url({% static prod.get_image_path %});">
+                        <div class="product__label">
+                            <span>{{ item }}</span>
+                        </div>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="{% url 'product' prod.name %}">{{ prod }}</a></h6>
+                        <div class="product__item__price">${{ prod.price|floatformat:2 }}</div>
+                        <form class="cart_add" method="POST" action="{% url 'add' %}">
+                            <input name='prod_id' value='{{ prod.id }}' aria-label='id' hidden>
+                            <input class='form-control ml-2' id='quantity' name='quantity' type='number' value='1' aria-label='quantity' hidden>
+                            <a type='submit' href="{% url 'add' %}" onclick='this.form.submit()'>Add to cart</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:4 or forloop.counter == 3 %}
+                </div>
+            {% endif %}
+            {% endfor %}
+
+            <div class="shop__last__option">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="shop__pagination">
+                            <a href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#"><span class="fa fa-chevron-right"></span></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="shop__last__text">
+                            <p>Showing 1-{{ item.products.count }} of {{ item.products.count }} results</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
 {% block script %}
